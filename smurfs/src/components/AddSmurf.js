@@ -5,12 +5,12 @@ import { postSmurf } from "../actions";
 
 const AddSmurf = ({ postSmurf, smurf, isPosting, error}) => {
   const [name, setName] = useState('');
-  const [age, setAge] = useState(null);
+  const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
 
   const submitHandler = (event) => {
     event.preventDefault();
-    postSmurf(JSON.stringify({name: name, age: age, height: `${height} cm`}));
+    postSmurf({name: name, age: age, height: `${height} cm`});
     event.target.reset();
   };
 
@@ -40,7 +40,22 @@ const AddSmurf = ({ postSmurf, smurf, isPosting, error}) => {
           <input type="text" name="height" value={height} placeholder="" onChange={changeHandler} /> cm<br />
           <button type="submit">Submit</button>
         </form>
-        <p>Just posted: {smurf.name}, {smurf.age} years old, {smurf.height} cm tall.</p>
+        <p>Just posted!</p>
+      </div>
+    )
+  } else if (error !== undefined && error !== null && error !== "") {
+    return (
+      <div>
+        <form onSubmit={submitHandler}>
+          <label htmlFor="name">Name: </label>
+          <input type="text" name="name" value={name} placeholder="Name" onChange={changeHandler} /><br />
+          <label htmlFor="age">Age: </label>
+          <input type="text" name="age" value={age} placeholder="" onChange={changeHandler} /> years<br />
+          <label htmlFor="height">Height: </label>
+          <input type="text" name="height" value={height} placeholder="" onChange={changeHandler} /> cm<br />
+          <button type="submit">Submit</button>
+        </form>
+        <p>Error: {error}</p>
       </div>
     )
   } else {

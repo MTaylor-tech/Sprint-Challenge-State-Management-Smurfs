@@ -31,6 +31,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isPosting: false,
+        error: "",
         smurf: action.payload
       };
     case POSTING_SMURF_FAILURE:
@@ -49,6 +50,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        error: "",
         smurf: action.payload
       };
     case FETCHING_SMURF_FAILURE:
@@ -66,6 +68,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        error: "",
         list: action.payload
       };
     case FETCHING_LIST_FAILURE:

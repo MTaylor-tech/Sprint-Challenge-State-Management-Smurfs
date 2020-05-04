@@ -48,7 +48,7 @@ export const getList = () => async dispatch => {
 
       dispatch({
         type: FETCHING_LIST_FAILURE,
-        payload: `${err.statusText} with response code ${err.status}`
+        payload: `${err.statusText} with response code ${err.status}, ${err.json}`
       });
     });
 };
@@ -57,7 +57,7 @@ export const postSmurf = (smurf) => async dispatch => {
   dispatch({ type: POSTING_SMURF_START });
 
   axios
-    .post(`${apiServer}`)
+    .post(`${apiServer}`, smurf)
     .then(res => {
       console.log(res);
 
@@ -65,10 +65,11 @@ export const postSmurf = (smurf) => async dispatch => {
     })
     .catch(err => {
       console.log(err);
+      console.log(err.json);
 
       dispatch({
         type: POSTING_SMURF_FAILURE,
-        payload: `${err.statusText} with response code ${err.status}`
+        payload: `${err.statusText} with response code ${err.status}, ${err}`
       });
     });
 }
