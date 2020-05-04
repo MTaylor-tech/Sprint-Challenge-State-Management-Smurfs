@@ -16,7 +16,7 @@ function SmurfList({ getList, isFetching, error, list}) {
         {list.map(smurf=>{
           return (
             <div className="smurfcard">
-              <NavLink className="smurflink smurfcard" to={`/smurf/${smurf.id}`}>
+              <NavLink className="smurflink" to={`/smurf/${smurf.id}`}>
                 <div>
                   <h2>{smurf.name}</h2>
                   <p>Age: {smurf.age}</p>
