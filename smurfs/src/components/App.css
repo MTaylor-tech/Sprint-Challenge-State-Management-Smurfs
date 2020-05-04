@@ -29,8 +29,10 @@ a {
   text-decoration: none;
 }
 
-.pagelink {
+.editlink {
   text-decoration: underline;
+  color: royalblue;
+  margin: 1vh 2vw;
 }
 
 nav {
@@ -58,12 +60,19 @@ nav {
   color: white;
 }
 
-.smurfcard:nth-child(even) {
+.smurfcard:nth-child(odd) {
   background: white;
   border-radius:10px;
   color: royalblue;
 }
 
-.smurfcard:nth-child(even) > a > div {
+.smurfcard:nth-child(odd) > a > div {
   color: royalblue;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

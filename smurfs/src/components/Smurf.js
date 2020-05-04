@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { connect } from "react-redux";
-import { useParams, Link, Redirect} from "react-router-dom";
+import { useParams, NavLink, Redirect} from "react-router-dom";
 
 import { getSmurfById, deleteSmurf } from "../actions";
 
@@ -35,12 +35,14 @@ const Smurf = ({ getSmurfById, deleteSmurf, smurf, isFetching, error}) => {
     return <h2>Fetching your smurf now :)</h2>;
   } else if (smurf!==undefined && smurf!==null) {
     return (
-      <div className="smurfcard">
-        <h2>{smurf.name}</h2>
-        <p>Age: {smurf.age}</p>
-        <p>Height: {smurf.height}</p>
-        <Link to={`/update/${smurf.id}`}>Update</Link><br />
-        <button onClick={getRidOfTheBugger}>Delete</button>
+      <div className="center">
+        <div className="smurfcard">
+          <h2>{smurf.name}</h2>
+          <p>Age: {smurf.age}</p>
+          <p>Height: {smurf.height}</p>
+          <NavLink className='editlink' to={`/update/${smurf.id}`}>Update</NavLink><br />
+          <button className='editlink' onClick={getRidOfTheBugger}>Delete</button>
+        </div>
       </div>
     );
   } else {
