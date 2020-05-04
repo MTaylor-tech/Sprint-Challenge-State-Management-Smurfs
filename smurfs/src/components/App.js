@@ -18,6 +18,10 @@ export default function App() {
         <Switch>
           <Route path="/smurf/:smurfId" component={Smurf} />
           <Route path="/add" component={AddSmurf} />
+          <Route
+              path='/update/:smurfId'
+              render={(props) => <AddSmurf {...props} toUpdate={true} />}
+            />
           <Route exact path="/" component={SmurfList} />
         </Switch>
       </div>

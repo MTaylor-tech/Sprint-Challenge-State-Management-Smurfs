@@ -1,16 +1,41 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
+import {  Redirect } from 'react-router-dom';
 
-import { postSmurf } from "../actions";
+import { postSmurf, updateSmurf, getSmurfById } from "../actions";
 
-const AddSmurf = ({ postSmurf, smurf, isPosting, error}) => {
+const AddSmurf = ({ postSmurf, updateSmurf, getSmurfById, smurf, isPosting, error, toUpdate, smurfId}) => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
+  const [redirect, setRedirect] = useState(null);
+
+  useEffect(()=>{
+    if (toUpdate) {
+      getSmurfById(smurfId);
+    }
+  },[smurfId, getSmurfById, toUpdate]);
+
+  useEffect(()=>{
+    if (toUpdate && smurf !== null) {
+      setName(smurf.name);
+      setAge(smurf.age);
+      setHeight(smurf.height);
+    }
+  },[smurf, toUpdate]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    postSmurf({name: name, age: age, height: `${height} cm`});
+    if (toUpdate) {
+      smurf.name = name;
+      smurf.age = age;
+      smurf.height = height;
+      updateSmurf(smurf);
+      setRedirect(`/smurf/${smurf.id}`);
+    } else {
+      postSmurf({name: name, age: age, height: `${height} cm`});
+      setRedirect('/');
+    }
     event.target.reset();
   };
 
@@ -23,6 +48,12 @@ const AddSmurf = ({ postSmurf, smurf, isPosting, error}) => {
       setHeight(event.target.value);
     }
   };
+
+if (redirect !== null) {
+  return (
+    <Redirect to={redirect} />
+  );
+}
 
   if (isPosting) {
     return (
@@ -38,9 +69,8 @@ const AddSmurf = ({ postSmurf, smurf, isPosting, error}) => {
           <input type="text" name="age" value={age} placeholder="" onChange={changeHandler} /> years<br />
           <label htmlFor="height">Height: </label>
           <input type="text" name="height" value={height} placeholder="" onChange={changeHandler} /> cm<br />
-          <button type="submit">Submit</button>
+          {toUpdate?<button type="submit">Update</button>:<button type="submit">Submit</button>}
         </form>
-        <p>Just posted!</p>
       </div>
     )
   } else if (error !== undefined && error !== null && error !== "") {
@@ -85,5 +115,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { postSmurf }
+  { postSmurf, updateSmurf, getSmurfById }
 )(AddSmurf);

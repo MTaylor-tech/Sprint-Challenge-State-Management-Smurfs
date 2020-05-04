@@ -9,6 +9,12 @@ export const FETCHING_LIST_FAILURE = "FETCHING_LIST_FAILURE";
 export const POSTING_SMURF_START = "POSTING_SMURF_START";
 export const POSTING_SMURF_SUCCESS = "POSTING_SMURF_SUCCESS";
 export const POSTING_SMURF_FAILURE = "POSTING_SMURF_FAILURE";
+export const UPDATING_SMURF_START = "UPDATING_SMURF_START";
+export const UPDATING_SMURF_SUCCESS = "UPDATING_SMURF_SUCCESS";
+export const UPDATING_SMURF_FAILURE = "UPDATING_SMURF_FAILURE";
+export const DELETING_SMURF_START = "DELETING_SMURF_START";
+export const DELETING_SMURF_SUCCESS = "DELETING_SMURF_SUCCESS";
+export const DELETING_SMURF_FAILURE = "DELETING_SMURF_FAILURE";
 
 const apiServer = `http://localhost:3333/smurfs`;
 
@@ -54,7 +60,7 @@ export const getList = () => async dispatch => {
 };
 
 export const postSmurf = (smurf) => async dispatch => {
-  dispatch({ type: POSTING_SMURF_START });
+  dispatch({ type: POSTING_SMURF_START, payload: smurf });
 
   axios
     .post(`${apiServer}`, smurf)
@@ -69,6 +75,48 @@ export const postSmurf = (smurf) => async dispatch => {
 
       dispatch({
         type: POSTING_SMURF_FAILURE,
+        payload: `${err.statusText} with response code ${err.status}, ${err}`
+      });
+    });
+}
+
+export const updateSmurf = (smurf) => async dispatch => {
+  dispatch({ type: UPDATING_SMURF_START, payload: smurf });
+
+  axios
+    .put(`${apiServer}/${smurf.id}`, smurf)
+    .then(res => {
+      console.log(res);
+
+      dispatch({ type: UPDATING_SMURF_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      console.log(err.json);
+
+      dispatch({
+        type: UPDATING_SMURF_FAILURE,
+        payload: `${err.statusText} with response code ${err.status}, ${err}`
+      });
+    });
+}
+
+export const deleteSmurf = (smurf) => async dispatch => {
+  dispatch({ type: DELETING_SMURF_START, payload: smurf });
+
+  axios
+    .delete(`${apiServer}/${smurf.id}`)
+    .then(res => {
+      console.log(res);
+
+      dispatch({ type: DELETING_SMURF_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      console.log(err.json);
+
+      dispatch({
+        type: DELETING_SMURF_FAILURE,
         payload: `${err.statusText} with response code ${err.status}, ${err}`
       });
     });

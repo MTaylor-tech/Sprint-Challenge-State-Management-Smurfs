@@ -1,15 +1,27 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { connect } from "react-redux";
-import { useParams} from "react-router-dom";
+import { useParams, Link, Redirect} from "react-router-dom";
 
-import { getSmurfById } from "../actions";
+import { getSmurfById, deleteSmurf } from "../actions";
 
-const Smurf = ({ getSmurfById, smurf, isFetching, error}) => {
+const Smurf = ({ getSmurfById, deleteSmurf, smurf, isFetching, error}) => {
+  const [redirect, setRedirect] = useState(null);
   let {smurfId} = useParams();
 
   useEffect(()=>{
     getSmurfById(smurfId);
   },[smurfId, getSmurfById]);
+
+  const getRidOfTheBugger = () => {
+    deleteSmurf(smurf);
+    setRedirect('/');
+  }
+
+  if (redirect !== null) {
+    return (
+      <Redirect to={redirect} />
+    );
+  }
 
   if (error !== "")
     return (
@@ -27,6 +39,8 @@ const Smurf = ({ getSmurfById, smurf, isFetching, error}) => {
         <h2>{smurf.name}</h2>
         <p>Age: {smurf.age}</p>
         <p>Height: {smurf.height}</p>
+        <Link to={`/update/${smurf.id}`}>Update</Link><br />
+        <button onClick={getRidOfTheBugger}>Delete</button>
       </div>
     );
   } else {
@@ -50,5 +64,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getSmurfById }
+  { getSmurfById, deleteSmurf }
 )(Smurf);

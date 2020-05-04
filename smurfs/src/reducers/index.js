@@ -8,6 +8,12 @@ import {
   FETCHING_LIST_START,
   FETCHING_LIST_SUCCESS,
   FETCHING_LIST_FAILURE,
+  UPDATING_SMURF_START,
+  UPDATING_SMURF_SUCCESS,
+  UPDATING_SMURF_FAILURE,
+  DELETING_SMURF_START,
+  DELETING_SMURF_SUCCESS,
+  DELETING_SMURF_FAILURE,
 } from "../actions";
 
 const initialState = {
@@ -25,6 +31,7 @@ export const reducer = (state = initialState, action) => {
     case POSTING_SMURF_START:
       return {
         ...state,
+        smurf: action.payload,
         isPosting: true
       };
     case POSTING_SMURF_SUCCESS:
@@ -77,6 +84,44 @@ export const reducer = (state = initialState, action) => {
         isFetching: false,
         error: action.payload
       };
+    case UPDATING_SMURF_START:
+      return {
+        ...state,
+        isPosting: true,
+        smurf: action.payload
+      };
+    case UPDATING_SMURF_SUCCESS:
+      return {
+        ...state,
+        isPosting: false,
+        error: "",
+        list: action.payload
+      };
+    case UPDATING_SMURF_FAILURE:
+      return {
+        ...state,
+        isPosting: false,
+          error: action.payload
+        };
+    case DELETING_SMURF_START:
+      return {
+        ...state,
+        smurf: action.payload,
+        isPosting: true
+      };
+    case DELETING_SMURF_SUCCESS:
+      return {
+        ...state,
+        isPosting: false,
+        error: "",
+        list: action.payload
+      };
+    case DELETING_SMURF_FAILURE:
+      return {
+        ...state,
+        isPosting: false,
+          error: action.payload
+        };
     default:
       return state;
   }
