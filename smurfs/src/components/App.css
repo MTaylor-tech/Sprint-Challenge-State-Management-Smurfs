@@ -1,3 +1,78 @@
 .App {
   text-align: center;
+  padding: 4vh 4vw;
+  background: rgb(2,0,36);
+background: -webkit-linear-gradient(left, rgba(51,64,212,1) 0%, rgba(51,64,212,0.7) 50%, rgba(51,64,212,0.5) 100%);
+background: -o-linear-gradient(left, rgba(51,64,212,1) 0%, rgba(51,64,212,0.7) 50%, rgba(51,64,212,0.5) 100%);
+background: linear-gradient(to right, rgba(51,64,212,1) 0%, rgba(51,64,212,0.7) 50%, rgba(51,64,212,0.5) 100%);
+  color: white;
+  height: 100%;
+}
+
+.description {
+  text-align: justify;
+  padding: 0 4vw;
+}
+
+img {
+  height: 40vmin;
+  pointer-events: none;
+  border-radius: 10px;
+}
+
+a {
+  color: white;
+  text-decoration-style: dotted;
+}
+
+.smurflink {
+  text-decoration: none;
+}
+
+.editlink {
+  text-decoration: underline;
+  color: royalblue;
+  margin: 1vh 2vw;
+}
+
+nav {
+  margin: 2vh 2vw;
+}
+
+.pagehead {
+  color: white;
+}
+
+.searchOptions {
+  margin: 1vh 0;
+}
+
+.smurflist {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.smurfcard {
+  width: 24%;
+  padding: 2vh 2vw;
+  margin: 2vh 2vw;
+  color: white;
+}
+
+.smurfcard:nth-child(odd) {
+  background: white;
+  border-radius:10px;
+  color: royalblue;
+}
+
+.smurfcard:nth-child(odd) > a > div {
+  color: royalblue;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

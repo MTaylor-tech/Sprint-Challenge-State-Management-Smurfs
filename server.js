@@ -66,6 +66,23 @@ server.put('/smurfs/:id', (req, res) => {
   }
 });
 
+server.get('/smurfs/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, age, height } = req.body;
+  const findSmurfById = smurf => {
+    return smurf.id == id;
+  };
+  const foundSmurf = smurfs.find(findSmurfById);
+  if (!foundSmurf) {
+    return sendUserError('No Smurf found by that ID', res);
+  } else {
+    if (name) foundSmurf.name = name;
+    if (age) foundSmurf.age = age;
+    if (height) foundSmurf.height = height;
+    res.json(foundSmurf);
+  }
+});
+
 server.delete('/smurfs/:id', (req, res) => {
   const { id } = req.params;
   const foundSmurf = smurfs.find(smurf => smurf.id == id);
